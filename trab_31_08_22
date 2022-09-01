@@ -1,0 +1,46 @@
+
+create table PRODS (
+codigo NUMERIC(3) NOT NULL,
+nome VARCHAR(50) NOT NULL,
+preco NUMERIC(5,2) NOT NULL,
+tipo CHAR(1) NULL,
+-- [S]uprimento, [C]componente, [p]eriferico
+constraint PK1 PRIMARY KEY (codigo));
+
+INSERT INTO PRODS
+VALUES (10, 'HD', 200, 'C'),
+(11,'Memoria', 250,'C'),
+(12,'Impressora', 600, 'P'),
+(13, 'Processador', 600,'C'),
+(14,'DVD-RW', 2, 'S'),
+(15, 'papel a4', 19,'S'),
+(16, 'Scanner', 199, 'P');
+
+select * from prods;
+-- a)
+select count(codigo) from prods; 
+-- b)
+SELEct  count(tipo) from prods; 
+
+SELECT * FROM prods;
+-- c)
+SELECT 
+	SUM(CASE WHEN tipo LIKE 'C' THEN 1 ELSE 0 END) AS tipo_c,
+	SUM(CASE WHEN tipo LIKE 's' THEN 1 ELSE 0 END) AS tipo_s,
+	SUM(CASE WHEN tipo LIKE 'p' THEN 1 ELSE 0 END) AS tipo_p
+
+FROM prods; 
+-- C)
+SELECT   tipo,        
+         COUNT(tipo) AS qtd
+FROM  prods
+GROUP BY tipo
+HAVING   COUNT(tipo) > 1
+ORDER BY COUNT(tipo) DESC;
+
+-- d)
+select avg(preco) from prods where tipo =('s');
+
+-- f)
+select tipo, avg(preco)  from prods group by (tipo) ;
+ 
